@@ -1,0 +1,112 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nRoot"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="#696969"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/nImage"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@mipmap/music_player_default_cover" />
+
+    <TextView
+        android:id="@+id/nTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@id/nImage"
+        android:layout_toLeftOf="@id/nPlay_prev_lay"
+        android:layout_toRightOf="@id/nPlay_prev_lay"
+        android:layout_toStartOf="@id/nPlay_prev_lay"
+        android:gravity="start"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:textAlignment="viewStart"
+        android:textColor="#fff"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/nArtist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/nImage"
+        android:layout_toLeftOf="@id/nPlay_prev_lay"
+        android:layout_toRightOf="@id/nImage"
+        android:layout_toStartOf="@id/nPlay_prev_lay"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:textColor="#fff"
+        android:textSize="12sp" />
+
+    <RelativeLayout
+        android:id="@+id/nPlay_prev_lay"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/nPrev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:foreground="@drawable/ripple_effect"
+            android:onClick="prevClick"
+            android:src="@mipmap/music_mini_player_ic_control_prev" />
+
+        <ImageView
+            android:id="@+id/nPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ripple_effect"
+            android:clickable="true"
+            android:onClick="playClick"
+            android:src="@mipmap/music_mini_player_ic_control_play"
+            tools:targetApi="lollipop" />
+
+        <ImageView
+            android:id="@+id/nNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:foreground="@drawable/ripple_effect"
+            android:onClick="nextClick"
+            android:src="@mipmap/music_mini_player_ic_control_next" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/nClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        android:foreground="@drawable/ripple_effect"
+        android:src="@drawable/ic_close_white_24dp" />
+</RelativeLayout>
