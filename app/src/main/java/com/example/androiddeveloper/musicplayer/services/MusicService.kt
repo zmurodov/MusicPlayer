@@ -57,6 +57,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         fun onStateChanged(state: Int)
     }
 
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     @SuppressLint("ServiceCast")
     override fun onCreate() {
         super.onCreate()
@@ -64,32 +65,34 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         mp.setOnErrorListener(this)
         mp.setOnPreparedListener(this)
 
+        updateNotification()
+
 //        nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManagerCompat?
 
 
-        val notificationIntent = Intent(this, MainActivity::class.java)
-//        notificationIntent.putExtra("NOTIFICATION", "AAAAAAAAAAAAAAAAAAAAA")
-
-        val pendingIntent = PendingIntent.getActivity(this, 0,
-                notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        notificationLayout = RemoteViews(this.packageName, R.layout.notification_main)
-
-
-        val notification = Notification.Builder(applicationContext)
-                .setSmallIcon(R.mipmap.music_player_default_cover)
-                .setContentTitle("My Awesome App")
-                .setContentText("Doing some work...")
-                .setContentIntent(pendingIntent)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                .build()
-
-        notification.contentView = notificationLayout
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            notification.bigContentView = notificationLayout
-        }
-
-        startForeground(101, notification)
+//        val notificationIntent = Intent(this, MainActivity::class.java)
+////        notificationIntent.putExtra("NOTIFICATION", "AAAAAAAAAAAAAAAAAAAAA")
+//
+//        val pendingIntent = PendingIntent.getService(this, 0,
+//                notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+//
+//        notificationLayout = RemoteViews(this.packageName, R.layout.notification_main)
+//
+//
+//        val notification = Notification.Builder(applicationContext)
+//                .setSmallIcon(R.mipmap.music_player_default_cover)
+//                .setContentTitle("My Awesome App")
+//                .setContentText("Doing some work...")
+//                .setContentIntent(pendingIntent)
+//                .setPriority(Notification.PRIORITY_MAX)
+//                .build()
+//
+//        notification.contentView = notificationLayout
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//            notification.bigContentView = notificationLayout
+//        }
+//
+//        startForeground(101, notification)
 
         Log.d("TAG", "OnCreate")
     }
@@ -152,28 +155,28 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
 
     fun updateNotification() {
         if (notificationLayout == null) {
-            val openIntent = Intent(this, MainActivity::class.java)
-            val open = PendingIntent.getActivity(this, 0, openIntent, 0)
+//            val openIntent = Intent(this, MainActivity::class.java)
+//            val open = PendingIntent.getActivity(this, 0, openIntent, 0)
 
             val closeIntent = Intent(this, MainActivity::class.java)
             closeIntent.action = CLOSE
-            val close = PendingIntent.getActivity(this, 0, closeIntent, 0)
+            val close = PendingIntent.getService(this, 0, closeIntent, 0)
 
             val startIntent = Intent(this, MainActivity::class.java)
             startIntent.action = START
-            start = PendingIntent.getActivity(this, 0, startIntent, 0)
+            start = PendingIntent.getService(this, 0, startIntent, 0)
 
             val stopIntent = Intent(this, MainActivity::class.java)
             stopIntent.action = STOP
-            stop = PendingIntent.getActivity(this, 0, stopIntent, 0)
+            stop = PendingIntent.getService(this, 0, stopIntent, 0)
 
             notificationLayout = RemoteViews(packageName, R.layout.notification_main)
-            notificationLayout!!.setOnClickPendingIntent(R.id.nRoot, open)
+//            notificationLayout!!.setOnClickPendingIntent(R.id.nRoot, open)
             notificationLayout!!.setOnClickPendingIntent(R.id.nClose, close)
         }
 
-//        notificationLayout!!.setTextViewText(R.id.nTitle, music?.title)
-//        notificationLayout!!.setTextViewText(R.id.nArtist, music?.artist)
+        notificationLayout!!.setTextViewText(R.id.nTitle, music?.title)
+        notificationLayout!!.setTextViewText(R.id.nArtist, music?.artist)
 //        notificationLayout!!.setImageViewUri(R.id.nImage, Uri.fromFile(File(music?.albumCoverPath)))
 
 
@@ -187,7 +190,7 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
         val notificationIntent = Intent(this, MainActivity::class.java)
         notificationIntent.putExtra("NOTIFICATION", "AAAAAAAAAAAAAAAAAAAAA")
 
-        val pendingIntent = PendingIntent.getActivity(this, 0,
+        val pendingIntent = PendingIntent.getService(this, 0,
                 notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 //
 
@@ -197,11 +200,10 @@ class MusicService : Service(), MediaPlayer.OnPreparedListener, MediaPlayer.OnEr
                 .setPriority(Notification.PRIORITY_MAX)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .setContentIntent(pendingIntent)
-                .setContent(notificationLayout)
+                .setCustomBigContentView(notificationLayout)
                 .build()
 
         startForeground(101, notification)
-
 
     }
 
